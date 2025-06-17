@@ -1,0 +1,36 @@
+ul {
+    height: -webkit-fill-available;
+    overflow-y: auto;
+}
+li {
+    color: #d0cccc;
+    cursor: pointer;
+    padding-left: 25px;
+}
+li > span {
+    color: #d0cccc;
+}
+li:hover{
+    /* background-color: #fff; */
+    background-color: #6465dd47;
+    color: #fff;
+    /* color: #000; */
+    color: #6465DD;
+    /* border-right: #000 solid 1px; */
+    border-right: #6465DD solid 4px;
+    border-radius: .3rem;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-gap: 32px;
+}
+
+.blue-buttons:hover{
+    opacity: 0.8;
+}
+
+.grey-buttons:hover{
+    background-color: rgb(241, 240, 240);
+}
