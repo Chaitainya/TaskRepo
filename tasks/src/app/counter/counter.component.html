@@ -1,2 +1,21 @@
-<app-navbar></app-navbar>
-<div style="height: calc(100vh - 78px); padding: 2rem;"></div>
+<app-navbar [counterAppCount]="totalCount"></app-navbar>
+<div style="height: calc(100vh - 78px); padding: 2rem;">
+    <div class="d-flex align-items-center mb-3">
+        <button type="button" class="btn btn-primary me-3" (click)="resetCounters()">Reset</button>
+        <button type="button" class="btn btn-primary" (click)="addCounter()">Add</button>
+    </div>
+
+    <ng-container *ngFor="let counter of counters; let index = index">
+        <div class="mb-3">
+            <button type="button" class="btn btn-primary me-3">{{ counter.count }}</button>
+            <button type="button" class="btn btn-secondary me-3" (click)="increment(index)">Increment</button>
+            <button type="button" class="btn btn-secondary me-3" (click)="decrement(index)">Decrement</button>
+            <button type="button" class="btn btn-danger" (click)="deleteCounter(index)">Delete</button>
+        </div>
+    </ng-container>
+
+    <div *ngIf="counters?.length === 0">
+        <h6 class="m-0">No counters available</h6>
+        <p style="font-size: 14px;">Click on Add button to add counters</p>
+    </div>
+</div>
