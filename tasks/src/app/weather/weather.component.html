@@ -1,4 +1,4 @@
-<app-navbar [toggleAlert]="toggleAlert" [alertMessage]="alertMessage"></app-navbar>
+<app-navbar></app-navbar>
 
 <div class="d-flex" style="height: calc(100vh - 78px)">
     <!-- Sidebar -->
@@ -106,7 +106,7 @@
                      class="d-flex flex-column align-items-center scale-up px-3 py-2 rounded"
                      [ngStyle]="isToday(item?.dt_txt) ? {'background-color': '#f1f1f1'} : {}"
                      style="cursor: pointer; transition: all .3s;">
-                    <div>{{ getDate(item?.dt_txt) }}</div>
+                    <div class="fw-medium">{{ isToday(item?.dt_txt) ? 'Today' : '' }} ({{ getDate(item?.dt_txt) }})</div>
                     <div>{{ getDayOfWeek(item?.dt_txt) }}</div>
                     <img src="assets/images/weather/rainy-3.svg" alt="" style="width: 6rem;">
                     <div>{{ item?.main?.temp }}°C</div>

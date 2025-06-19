@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { WeatherService } from './weather.service';
+import { ToasterService } from '../toaster/toaster.service';
 
 @Component({
   selector: 'app-weather',
@@ -12,11 +13,12 @@ export class WeatherComponent {
   weatherDetails: any;
   foreCastInfo: any;
   @ViewChild('refresh') refresh: ElementRef<any> | undefined;
-  toggleAlert: boolean = false;
-  alertMessage: string = '';
+  // toggleAlert: boolean = false;
+  // alertMessage: string = '';
 
   constructor(
-    private weatherService: WeatherService
+    private weatherService: WeatherService,
+    private toasterService: ToasterService
   ) { }
 
   getWeather(refreshIndex?: number) {
@@ -40,13 +42,15 @@ export class WeatherComponent {
       }, (error) => {
         console.error(error);
         if (error.status === 404) {
-          this.toggleAlert = true;
-          this.alertMessage = error?.error?.message || "City not found";
+          // this.toggleAlert = true;
+          // this.alertMessage = error?.error?.message || "City not found";
+          this.toasterService.toggleToaster(true);
         }
       });
     } else {
-      this.toggleAlert = true;
-      this.alertMessage = "Weather already fetched for " + this.city;
+      // this.toggleAlert = true;
+      // this.alertMessage = "Weather already fetched for " + this.city;
+      this.toasterService.toggleToaster(true);
     }
   }
 

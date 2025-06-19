@@ -1,9 +1,9 @@
 <div style="background-color: #1B73F9; padding: 1.5em; display: flex; align-items: center; position: relative;">
 
     <!-- Toaster -->
-    <ng-container *ngIf="toggleAlert">
-        <app-toaster [alertMessage]="alertMessage"></app-toaster>
-    </ng-container>
+    <div *ngIf="toggleAlert" style="position: absolute; top: 30px;" class="d-flex align-items-center justify-content-center w-100">
+        <app-toaster></app-toaster>
+    </div>
 
     <div style="display: flex; align-items: center; margin-right: 2rem; cursor: pointer"
         (click)="changeApp('COUNTER')">
