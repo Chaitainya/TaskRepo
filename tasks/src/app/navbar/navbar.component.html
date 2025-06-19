@@ -1,1 +1,23 @@
-<p>navbar works!</p>
+<div style="background-color: #1B73F9; padding: 1.5em; display: flex; align-items: center; position: relative;">
+
+    <!-- Toaster -->
+    <ng-container *ngIf="toggleAlert">
+        <app-toaster [alertMessage]="alertMessage"></app-toaster>
+    </ng-container>
+
+    <div style="display: flex; align-items: center; margin-right: 2rem; cursor: pointer"
+        (click)="changeApp('COUNTER')">
+        <div style="font-size: large; margin-right: .5rem;" [ngStyle]="{ 'font-weight': applicationName === 'COUNTER' ? '700' : '400' }">
+            Counter App
+        </div>
+        <div style="background-color: #6D757D; padding: .2rem .7rem; border-radius: 1rem; color: #fff; font-weight: 700;">
+            {{ counterAppCount }}
+        </div>
+    </div>
+
+    <div style="font-size: large; margin-right: .5rem; cursor: pointer;"
+        [ngStyle]="{ 'font-weight': applicationName === 'WEATHER' ? '700' : '400' }"
+        (click)="changeApp('WEATHER')">
+        Weather App
+    </div>
+</div>

@@ -5,9 +5,10 @@ import { WeatherComponent } from './weather/weather.component';
 import { StaticComponent } from './static/static.component';
 
 const routes: Routes = [
-  { path: '', component: CounterComponent }, // default route
-  { path: 'weather', component: WeatherComponent }, // navigated by button
-  { path: 'static', component: StaticComponent }, // exact URL
+  { path: '', redirectTo: 'counter', pathMatch: 'full' }, // default route redirect
+  { path: 'counter', component: CounterComponent },
+  { path: 'vatavaran', component: WeatherComponent },
+  { path: 'static', component: StaticComponent },
 ];
 
 @NgModule({

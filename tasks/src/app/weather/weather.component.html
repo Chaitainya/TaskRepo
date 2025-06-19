@@ -1,2 +1,89 @@
-<app-navbar></app-navbar>
-<p>weather works!</p>
+<app-navbar [toggleAlert]="toggleAlert" [alertMessage]="alertMessage"></app-navbar>
+<div style="height: calc(100vh - 78px)" class="d-flex">
+    <div class="w-25 p-3" style="box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); background-color: #f7f7f7;">
+        <div class="d-flex align-items-center pt-2" style="padding: .5rem;">
+            <div style="border-radius: .3rem; flex: 1; box-shadow: 0px 3px 5px -4px #000; margin-right: .5rem;">
+                <input type="text" placeholder="Type city name"
+                    style="border: none; outline: none; width: 100%; border-radius: .3rem; padding-left: .5rem; padding-right: .5rem; height: 2rem;"
+                    [(ngModel)]="city" (keyup.enter)="getWeather()">
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                style="width: 1.5rem; margin-top: 5px; cursor: pointer;" (click)="getWeather()">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+        </div>
+
+        <!-- <hr> -->
+        
+        <div style="padding: .5rem;">
+            <h6 style="margin: 0; font-size: 14px; color: gray">Recent locations</h6>
+            <hr style="margin-top: 0; margin-bottom: .5rem;">
+            <div style="height: calc(100vh - 254px)">
+                <span *ngIf="weatherData?.length == 0">No data recent searches</span>
+                <div *ngFor="let city of weatherData; let index = index"
+                    [ngStyle]="weatherDetails?.name == city?.name ? {'background-color': '#dde8f9'} : {}"
+                    class="d-flex justify-content-between align-items-center cities flex-wrap"
+                    style="padding: .5rem; border-bottom: 1px solid #C7C8C9; cursor: pointer; border-radius: .3rem;"
+                    (click)="showWeatherDetails(city)">
+                    <div style="font-size: 17px;">
+                        {{ city?.name }} - {{ city?.main?.temp }}°C, 
+                        {{ city?.weather[0]?.description | titlecase }}
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="scale-up" style="width: 1.5rem; margin-right: .5rem; transition: all .3s;"
+                            (click)="refreshCity(city?.name, index)">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="scale-up" style="width: 1.5rem;"
+                            (click)="removeCity(city?.name)">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end" style="padding: .5rem;">
+            <button class="btn btn-secondary" (click)="clearRecentSearches()">Clear</button>
+        </div>
+    </div>
+
+    <!-- Weather details -->
+    <div class="w-75 p-4">
+        <div *ngIf="!weatherDetails" class="d-flex justify-content-center align-items-center" style="width: 100%; height: 100%;">
+            <div class="d-flex flex-column align-items-center">
+                <h3>No data found</h3>
+                <p>Please select a city</p>
+            </div>
+        </div>
+        <div *ngIf="weatherDetails">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="m-0">{{ weatherDetails?.name }}</h3>
+                <!-- click)="refreshCity(weatherDetails?.name)" -->
+                <svg #refresh xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 1.5rem; margin-right: .5rem; transition: all .3s; cursor: pointer;"
+                    (click)="showWeatherDetails(weatherDetails)">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+            </div>
+            <div class="d-flex flex-wrap">
+                <img src="assets/images/weather/rainy-3.svg" alt="" style="width: 16rem; border-radius: 1rem; margin-left: .8rem;">
+                <div class="d-flex flex-column justify-content-evenly" style="flex: 1;">
+                    <div style="font-weight: 500;">{{ weatherDetails?.main?.temp }}°C</div>
+                    <div style="font-weight: 500;">{{ weatherDetails?.weather[0]?.description | titlecase }}</div>
+                    <div>Wind: {{ weatherDetails?.wind?.speed }} m/s {{ weatherDetails?.wind?.deg}}°</div>
+                    <div>Pressure {{ weatherDetails?.main?.pressure }}</div>
+                </div>
+            </div>
+            <div class="d-flex flex-wrap" style="margin-top: 2rem; gap: 10px;">
+                <div *ngFor="let item of foreCastInfo" [ngStyle]="isToday(item?.dt_txt) ? {'background-color': '#f1f1f1'} : {}"
+                    class="d-flex flex-column align-items-center scale-up" style="margin-right: 1rem; border-radius: .3rem; padding: .5rem; cursor: pointer; transition: all .3s;">
+                    <div>{{ getDate(item?.dt_txt) }}</div>
+                    <div>{{ getDayOfWeek(item?.dt_txt) }}</div>
+                    <img src="assets/images/weather/rainy-3.svg" alt="" style="width: 6rem; margin-left: 1rem;">
+                    <div>{{ item?.main?.temp }}°C</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+.cities:hover {
+    background-color: #dde8f9;
+}
+
+.refresh {
+    transform: rotate(180deg);
+}
+
+.scale-up:hover{
+    transform: scale(1.1);
+}
