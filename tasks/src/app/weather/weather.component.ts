@@ -115,4 +115,8 @@ export class WeatherComponent {
     const today = new Date();
     return date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
   }
+
+  ngOnDestroy() {
+    this.toasterService.toggleToaster(false);
+  }
 }

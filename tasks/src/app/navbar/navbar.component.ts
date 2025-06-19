@@ -22,7 +22,7 @@ export class NavbarComponent {
     this.toasterService.getToasterStatus().subscribe((status) => {
       this.toggleAlert = status;
       clearTimeout(toasterTimeout);
-      if (this.toggleAlert = true) {
+      if (this.toggleAlert === true) {
         toasterTimeout = setTimeout(() => this.toggleAlert = false, 2000);
       }
     })
