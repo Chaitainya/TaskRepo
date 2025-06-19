@@ -5,13 +5,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ToasterService {
-  private toaster = new BehaviorSubject(false);
+  private toaster = new BehaviorSubject({});
   private _toaster$ = this.toaster.asObservable();
 
   constructor() { }
 
-  toggleToaster(status: boolean){
-    return this.toaster.next(status);
+  toggleToaster(data: any){
+    return this.toaster.next(data);
   }
 
   getToasterStatus(): Observable<any>{

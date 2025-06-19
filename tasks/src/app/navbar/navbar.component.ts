@@ -11,7 +11,8 @@ import { Subscription } from 'rxjs';
 export class NavbarComponent {
   applicationName: string = "";
   @Input() counterAppCount = 0;
-  toggleAlert = false;
+  toggleAlert: boolean = false;
+  alertMessage: string = ''
   toasterSubscription: Subscription | undefined;
   constructor(
     private router: Router,
@@ -21,11 +22,15 @@ export class NavbarComponent {
   ngOnInit(): void {
     this.applicationName = this.router.url === "/vatavaran" ? "WEATHER" : "COUNTER";
     let toasterTimeout: any;
-    this.toasterSubscription = this.toasterService.getToasterStatus().subscribe((status) => {
-      this.toggleAlert = status;
+    this.toasterSubscription = this.toasterService.getToasterStatus().subscribe((res) => {
+      this.toggleAlert = res?.status;
+      this.alertMessage = res?.message || '';
       clearTimeout(toasterTimeout);
       if (this.toggleAlert === true) {
-        toasterTimeout = setTimeout(() => this.toggleAlert = false, 2000);
+        toasterTimeout = setTimeout(() => {
+          this.toggleAlert = false;
+          this.alertMessage = '';
+        }, 2000);
       }
     })
   }

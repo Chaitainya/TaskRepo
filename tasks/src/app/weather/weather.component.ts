@@ -13,9 +13,6 @@ export class WeatherComponent {
   weatherDetails: any;
   foreCastInfo: any;
   @ViewChild('refresh') refresh: ElementRef<any> | undefined;
-  // toggleAlert: boolean = false;
-  // alertMessage: string = '';
-
   constructor(
     private weatherService: WeatherService,
     private toasterService: ToasterService
@@ -37,20 +34,21 @@ export class WeatherComponent {
           this.weatherData.unshift(data);
         }
         this.showWeatherDetails(data);
-        console.log("Weather Data", this.weatherData);
         this.city = "";
       }, (error) => {
         console.error(error);
         if (error.status === 404) {
-          // this.toggleAlert = true;
-          // this.alertMessage = error?.error?.message || "City not found";
-          this.toasterService.toggleToaster(true);
+          this.toasterService.toggleToaster({
+            status: true,
+            message: error?.error?.message
+          });
         }
       });
     } else {
-      // this.toggleAlert = true;
-      // this.alertMessage = "Weather already fetched for " + this.city;
-      this.toasterService.toggleToaster(true);
+      this.toasterService.toggleToaster({
+        status: true,
+        message: "Weather already fetched for " + this.city
+      });
     }
   }
 
@@ -72,7 +70,6 @@ export class WeatherComponent {
         this.foreCastInfo = data.list.filter((item: any) =>
           item.dt_txt.includes('12:00:00')
         );  
-        console.log(this.foreCastInfo, "foreCastInfo");
       },
       (error) => {
         console.error(error);
@@ -81,13 +78,6 @@ export class WeatherComponent {
   }
 
   refreshCity(city: string, index: number) {
-    // setTimeout(() => {
-    //   this.refresh?.forEach((item, i) => {
-    //     if (i === index) {
-    //       item.nativeElement.classList.add('refresh');
-    //     }
-    //   })
-    // },100)
     this.city = city;
     this.weatherData = this.weatherData.filter((city) => city.name !== this.city);
     this.getWeather(index);

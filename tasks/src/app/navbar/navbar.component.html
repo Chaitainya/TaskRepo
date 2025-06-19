@@ -2,7 +2,7 @@
 
     <!-- Toaster -->
     <div *ngIf="toggleAlert" style="position: absolute; top: 30px; width: 95%;" class="d-flex align-items-center justify-content-center">
-        <app-toaster></app-toaster>
+        <app-toaster [alertMessage]="alertMessage"></app-toaster>
     </div>
 
     <div style="display: flex; align-items: center; margin-right: 2rem; cursor: pointer"
