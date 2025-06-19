@@ -7,7 +7,7 @@
 
     <div style="display: flex; align-items: center; margin-right: 2rem; cursor: pointer"
         (click)="changeApp('COUNTER')">
-        <div style="font-size: large; margin-right: .5rem;" [ngStyle]="{ 'font-weight': applicationName === 'COUNTER' ? '700' : '400' }">
+        <div [ngClass]="applicationName !== 'COUNTER' ? 'navItems' : ''" style="font-size: large; margin-right: .5rem;" [ngStyle]="{ 'font-weight': applicationName === 'COUNTER' ? '700' : '400' }">
             Counter App
         </div>
         <div style="background-color: #6D757D; padding: .2rem .7rem; border-radius: 1rem; color: #fff; font-weight: 700;">
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div style="font-size: large; margin-right: .5rem; cursor: pointer;"
+    <div [ngClass]="applicationName !== 'WEATHER' ? 'navItems' : ''" style="font-size: large; margin-right: .5rem; cursor: pointer;"
         [ngStyle]="{ 'font-weight': applicationName === 'WEATHER' ? '700' : '400' }"
         (click)="changeApp('WEATHER')">
         Weather App
