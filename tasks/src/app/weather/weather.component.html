@@ -30,7 +30,7 @@
                 <span *ngIf="weatherData?.length == 0">No recent searches</span>
                 <div *ngFor="let city of weatherData; let index = index"
                      class="d-flex justify-content-between align-items-center flex-wrap rounded py-2 px-2 mb-1"
-                     [ngStyle]="weatherDetails?.name == city?.name ? {'background-color': '#dde8f9'} : {'background-color': '#fff'}"
+                     [ngStyle]="weatherDetails?.name === city?.name ? {'background-color': '#dde8f9'} : {'background-color': '#fff'}"
                      style="border-bottom: 1px solid #C7C8C9; cursor: pointer;"
                      (click)="showWeatherDetails(city)">
                     <div class="fw-normal" style="font-size: 17px;">
@@ -50,7 +50,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                              stroke-width="1.5" stroke="currentColor"
                              class="scale-up" style="width: 1.5rem;"
-                             (click)="removeCity(city?.name)">
+                             (click)="removeCity(city?.name, weatherDetails?.name === city?.name)">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                   d="M6 18 18 6M6 6l12 12" />
                         </svg>

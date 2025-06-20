@@ -83,7 +83,10 @@ export class WeatherComponent {
     this.getWeather(index);
   }
 
-  removeCity(city: string) {
+  removeCity(city: string, isCurrentCity: boolean) {
+    if (isCurrentCity) {
+      this.weatherDetails = null;
+    }
     this.weatherData = this.weatherData.filter((item) => item.name !== city);
     if (this.weatherData?.length === 0) {
       this.clearRecentSearches();
