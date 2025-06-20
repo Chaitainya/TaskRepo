@@ -19,7 +19,7 @@ export class WeatherComponent {
   ) { }
 
   getWeather(refreshIndex?: number) {
-    const weatherFound = this.weatherData.findIndex((city) => city.name === this.city) === -1 ? false : true;
+    const weatherFound = this.weatherData.findIndex((city) => city.name?.toLowerCase() === this.city?.toLowerCase()) === -1 ? false : true;
     if (!weatherFound) {
       this.weatherService.getWeatherByCity(this.city).subscribe((data) => {
 
